@@ -3,19 +3,18 @@ package Lingua::Han::Cantonese;
 use warnings;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.01';
+$VERSION = '0.02';
 
-use Encode;
 use File::Spec;
+use Lingua::Han::Utils qw/Unihan_value/;
 
 sub new {
 	my $class = shift;
 	my $dir = __FILE__; $dir =~ s/\.pm//o;
 	-d $dir or die "Directory $dir nonexistent!";
-	my $self = { '_dir_' => $dir, @_ };
-	unless ($self->{'format'}) { $self->{'format'} = 'gb2312'; }
+	my $self = { @_ };
 	my %ct;
-	my $file = File::Spec->catfile($self->{'_dir_'}, 'Cantonese.dat');
+	my $file = File::Spec->catfile($dir, 'Cantonese.dat');
 	open(FH, $file)	or die "$file: $!";
 	while(<FH>) {
 		my ($uni, $ct) = split(/\s+/);
@@ -29,8 +28,7 @@ sub new {
 sub han2Cantonese {
 	my ($self, $hanzi) = @_;
 	
-	$hanzi = decode ( $self->{'format'} , $hanzi); # decode it
-	my @code = map { uc sprintf("%x",$_) } unpack ("U*",$hanzi);
+	my @code = Unihan_value($hanzi);
 
 	my @result;
 	foreach my $code (@code) {
@@ -59,17 +57,12 @@ Lingua::Han::Cantonese - Retrieve the Cantonese(GuangDongHua) of Chinese charact
 
   use Lingua::Han::Cantonese;
   
-  # if the format of your script is gb2312, default
   my $h2p = new Lingua::Han::Cantonese();
-  print $h2p->han2Cantonese("我"); # ngo
-  
-  # if the format of your script is utf-8
-  my $h2p = new Lingua::Han::Cantonese(format => 'utf8');
   print $h2p->han2Cantonese("我"); # ngo
   my @result = $h2p->han2Cantonese("爱你"); # @result = ('ngoi', 'nei');
   
   # we can set the tone up
-  my $h2p = new Lingua::Han::Cantonese(format => 'utf8', tone => 1);
+  my $h2p = new Lingua::Han::Cantonese(tone => 1);
   print $h2p->han2Cantonese("我"); #ngo5
   my @result = $h2p->han2Cantonese("爱你"); # @result = ('ngoi3', 'nei5');
   print $h2p->han2Cantonese("林道"); #lam4dou3
@@ -88,10 +81,6 @@ if not(I mean it's not a Chinese character), returns the original word;
 =head1 OPTION
 
 =over 4
-
-=item format => 'utf8|gb2312'
-
-If you are in 'Unicode Editing' mode, plz set this to utf8, otherwise('ASCII Editing') use the default.
 
 =item tone => 1|0
 

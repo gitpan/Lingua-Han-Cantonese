@@ -9,8 +9,8 @@ my $builder = Module::Build->new(
     dist_version_from   => 'lib/Lingua/Han/Cantonese.pm',
     build_requires => {
         'Test::More' => 0,
-        'Encode' => 0,
         'File::Spec' => 0,
+        'Lingua::Han::Utils' => 0,
     },
 );
 $builder->add_build_element('dat');
