@@ -3,7 +3,7 @@ package Lingua::Han::Cantonese;
 use warnings;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use File::Spec;
 use Lingua::Han::Utils qw/Unihan_value/;
@@ -48,6 +48,7 @@ sub han2Cantonese {
 
 1;
 __END__
+=encoding utf8
 
 =head1 NAME
 
@@ -58,15 +59,15 @@ Lingua::Han::Cantonese - Retrieve the Cantonese(GuangDongHua) of Chinese charact
   use Lingua::Han::Cantonese;
   
   my $h2p = new Lingua::Han::Cantonese();
-  print $h2p->han2Cantonese("ÎÒ"); # ngo
-  my @result = $h2p->han2Cantonese("°®Äã"); # @result = ('ngoi', 'nei');
+  print $h2p->han2Cantonese("æˆ‘"); # ngo
+  my @result = $h2p->han2Cantonese("çˆ±ä½ "); # @result = ('ngoi', 'nei');
   
   # we can set the tone up
   my $h2p = new Lingua::Han::Cantonese(tone => 1);
-  print $h2p->han2Cantonese("ÎÒ"); #ngo5
-  my @result = $h2p->han2Cantonese("°®Äã"); # @result = ('ngoi3', 'nei5');
-  print $h2p->han2Cantonese("ÁÖµÀ"); #lam4dou3
-  print $h2p->han2Cantonese("I love ÓàÈğ»ª a"); #i love jyu4seoi6waa4 a
+  print $h2p->han2Cantonese("æˆ‘"); #ngo5
+  my @result = $h2p->han2Cantonese("çˆ±ä½ "); # @result = ('ngoi3', 'nei5');
+  print $h2p->han2Cantonese("æ—é“"); #lam4dou3
+  print $h2p->han2Cantonese("I love ä½™ç‘å a"); #i love jyu4seoi6waa4 a
 
 =head1 DESCRIPTION
 

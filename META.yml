@@ -1,6 +1,6 @@
 ---
 name: Lingua-Han-Cantonese
-version: 0.02
+version: 0.03
 author:
   - Fayland Lam <fayland@gmail.com>
 abstract: Retrieve the Cantonese(GuangDongHua) of Chinese character(HanZi).
@@ -12,5 +12,5 @@ build_requires:
 provides:
   Lingua::Han::Cantonese:
     file: lib/Lingua/Han/Cantonese.pm
-    version: 0.02
+    version: 0.03
 generated_by: Module::Build version 0.2611
